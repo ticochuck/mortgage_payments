@@ -21,7 +21,7 @@ print(f'Your Monthly Payment is: {round(montly_payment, 2)}')
 total_payments = int(input("How many payments would you like to make: " '\n'))
 
 
-def apply_payments(total_payments, balance, mortage_lenght_months):
+def apply_payments(total_payments, balance, mortgage_lenght_months):
     for i in range(total_payments):
         interests_montly = balance * month_interest_rate
         principal = montly_payment - interests_montly
@@ -29,8 +29,8 @@ def apply_payments(total_payments, balance, mortage_lenght_months):
         print(f'your interest payment is: {round(interests_montly, 2)}')
         balance -= principal
         print(f'Your new balance is: {round(balance, 2)}')
-        remaining_months = mortgage_lenght_months - 1
-        print('Remaining monthly payments: {remaining_months}')
+        remaining_months = mortgage_lenght_months - i - 1
+        print(f'Remaining monthly payments: {remaining_months}')
         print
     
     return balance
