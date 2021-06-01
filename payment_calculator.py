@@ -54,4 +54,8 @@ def apply_payments(total_payments, balance, mortgage_lenght_months):
         print(f'Total paid to date: {round(total_paid, 2)}')
     return balance
 
+
+def additional_principal_payments(balance, mortgage_lenght_months):
+    pass
+
 apply_payments(total_payments, balance, mortgage_lenght_months)
