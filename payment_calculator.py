@@ -33,29 +33,51 @@ montly_payment = balance * (month_interest_rate * ((1 + month_interest_rate)) **
 print('\n' f'Your Monthly Payment is: {round(montly_payment, 2)}' '\n')
 
 total_payments = int(input("How many payments would you like to make: " '\n'))
+add_prin_payments = int(input('Would you like to make additional payments to principa? \n'
+                              '1 = Yes, I want to make additional principal payments' '\n'
+                              "2 = No, I don't want to make additional principal payments" '\n'))
 
-def apply_payments(total_payments, balance, mortgage_lenght_months):
+if add_prin_payments == 1:
+    add_prin_payments_amount = int(input('How much would you like to pay add to prin? \n'))
+    
+
+def apply_payments(total_payments, balance, mortgage_lenght_months, add_prin_payments_amount):
     acum_int = 0
     acum_principal = 0
+    acum_add_principal = 0
+    tot_payments = 1
     for i in range(total_payments):
         interests_montly = balance * month_interest_rate
         acum_int += interests_montly
         principal = montly_payment - interests_montly
         acum_principal += principal
-        total_paid = acum_int + acum_principal
+        print(f'********** Payment {tot_payments} **********')
         print('\n' f'your principal payment is: {round(principal, 2)}')
         print(f'your interest payment is: {round(interests_montly, 2)}')
         balance -= principal
-        print(f'Your new balance is: {round(balance, 2)}')
+        print(f'Your new balance is: {round(balance, 2)}' '\n')
+        print(f'Your additional principal payment is {add_prin_payments_amount}')
+        balance -= add_prin_payments_amount
+        acum_add_principal += add_prin_payments_amount
+        print(f'Your new balance is: {round(balance, 2)}' '\n')
         remaining_months = mortgage_lenght_months - i - 1
+        total_principal =  acum_add_principal + acum_principal
+        total_paid = acum_int + acum_principal + acum_add_principal
         print(f'Remaining monthly payments: {remaining_months}')
         print(f'Acummulated Principal: {round(acum_principal, 2)}')
         print(f'Acummulated Interests: {round(acum_int, 2)}')
-        print(f'Total paid to date: {round(total_paid, 2)}')
+        print(f'Acummulated Additional Principal: {round(acum_add_principal, 2)}')
+        print(f'Acummulated Total Principal: {round(total_principal, 2)}')
+        print(f'Total paid to date: {round(total_paid, 2)} \n')
+        tot_payments += 1
     return balance
 
 
-def additional_principal_payments(balance, mortgage_lenght_months):
+def additional_principal_payments(balance, mortgage_lenght_months, add_prin_payments_amount):
     pass
 
-apply_payments(total_payments, balance, mortgage_lenght_months)
+
+
+
+
+apply_payments(total_payments, balance, mortgage_lenght_months, add_prin_payments_amount)
