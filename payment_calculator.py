@@ -10,6 +10,11 @@
     # m2 = 278452 * ((0.0036411 * ((1 + 0.0036411)) ** 360) / (((1 + 0.0036411)**(360))-1))
     # """
 
+def additional_principal_payments():
+    add_prin_payments_amount = int(input('How much would you like to pay add to prin? \n'))
+
+    return add_prin_payments_amount
+
 home_price = float(input('Enter home Price: '))
 
 five_percent = home_price * 0.05
@@ -38,7 +43,7 @@ add_prin_payments = int(input('Would you like to make additional payments to pri
                               "2 = No, I don't want to make additional principal payments" '\n'))
 
 if add_prin_payments == 1:
-    add_prin_payments_amount = int(input('How much would you like to pay add to prin? \n'))
+    add_prin_payments_amount = additional_principal_payments()
     
 
 def apply_payments(total_payments, balance, mortgage_lenght_months, add_prin_payments_amount):
@@ -73,8 +78,7 @@ def apply_payments(total_payments, balance, mortgage_lenght_months, add_prin_pay
     return balance
 
 
-def additional_principal_payments(balance, mortgage_lenght_months, add_prin_payments_amount):
-    pass
+
 
 
 
