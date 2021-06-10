@@ -1,52 +1,46 @@
-    # """
-    # M = P [ i(1 + i)^n ] / [ (1 + i)^n – 1]
+# Monthly Payment formula
+# M = P [ i(1 + i)^n ] / [ (1 + i)^n – 1]
 
-    # The variables are:
+# The variables are:
+# M = monthly mortgage payment
+# P = the principal, or the initial amount you borrowed.
+# i = your monthly interest rate. Your lender likely lists interest rates as an annual figure, so you’ll need to divide by 12, for each month of the year. So, if your rate is 5%, then the monthly rate will look like this: 0.05/12 = 0.004167.
+# n = the number of payments over the life of the loan. If you take out a 30-year fixed rate mortgage, this means: n = 30 years x 12 months per year, or 360 payments.
 
-    # M = monthly mortgage payment
-    # P = the principal, or the initial amount you borrowed.
-    # i = your monthly interest rate. Your lender likely lists interest rates as an annual figure, so you’ll need to divide by 12, for each month of the year. So, if your rate is 5%, then the monthly rate will look like this: 0.05/12 = 0.004167.
-    # n = the number of payments over the life of the loan. If you take out a 30-year fixed rate mortgage, this means: n = 30 years x 12 months per year, or 360 payments.
-    # m2 = 278452 * ((0.0036411 * ((1 + 0.0036411)) ** 360) / (((1 + 0.0036411)**(360))-1))
-    # """
+# Example: 
+# Home Price = 400.000, 
+# Annual interest = 4.375
+# Term = 30 years (360 months)
+# m2 = 400000 * ((0.0036411 * ((1 + 0.0036411)) ** 360) / (((1 + 0.0036411)**(360))-1))
 
-def additional_principal_payments():
-    add_prin_payments_amount = int(input('How much would you like to pay add to prin? \n'))
 
-    return add_prin_payments_amount
+def calculate_downpayment(home_price):
+    five_percent = home_price * 0.05
+    ten_percent =  home_price * 0.1
+    fifteen_percent =  home_price * 0.15
+    twenty_percent =  home_price * 0.2
 
-home_price = float(input('Enter home Price: '))
+    print(f'Downpayment options: 5% = ({five_percent}), 10% = ({ten_percent}), 15% = ({fifteen_percent}), 20% = ({twenty_percent})')
+    downpayment = float(input('Downpayment: '))
 
-five_percent = home_price * 0.05
-ten_percent =  home_price * 0.1
-fifteen_percent =  home_price * 0.15
-twenty_percent =  home_price * 0.2
+    return downpayment
 
-print(f'Downpayment options: 5% = ({five_percent}), 10% = ({ten_percent}), 15% = ({fifteen_percent}), 20% = ({twenty_percent})')
-downpayment = float(input('Downpayment: '))
 
-balance = home_price - downpayment
+def calculate_interests():
+    year_interest_rate = float(input('Annual Interests Rate: '))
+    month_interest_rate = (year_interest_rate/100)/12
 
-print(f'Your balance is {balance}')
+    return month_interest_rate
 
-# balance = float(input('Amount to borrow: '))
-year_interest_rate = float(input('Annual Interests Rate: '))
-month_interest_rate = (year_interest_rate/100)/12
-mortgage_lenght_years = int(input("Lenght of Mortgage in years: "))
-mortgage_lenght_months = mortgage_lenght_years * 12
-montly_payment = balance * (month_interest_rate * ((1 + month_interest_rate)) ** mortgage_lenght_months) / ((( 1 + month_interest_rate) ** (mortgage_lenght_months)) - 1)
-print('\n' f'Your Monthly Payment is: {round(montly_payment, 2)}' '\n')
 
-total_payments = int(input("How many payments would you like to make: " '\n'))
-add_prin_payments = int(input('Would you like to make additional payments to principa? \n'
-                              '1 = Yes, I want to make additional principal payments' '\n'
-                              "2 = No, I don't want to make additional principal payments" '\n'))
+def calculate_mortgage_term():
+    mortgage_lenght_years = int(input("Lenght of Mortgage in years: "))
+    mortgage_lenght_months = mortgage_lenght_years * 12
 
-if add_prin_payments == 1:
-    add_prin_payments_amount = additional_principal_payments()
-    
+    return mortgage_lenght_months
 
-def apply_payments(total_payments, balance, mortgage_lenght_months, add_prin_payments_amount):
+
+def apply_payments(total_payments, balance, mortgage_lenght_months, add_prin_payments_amount, month_interest_rate, montly_payment):
     acum_int = 0
     acum_principal = 0
     acum_add_principal = 0
@@ -78,10 +72,48 @@ def apply_payments(total_payments, balance, mortgage_lenght_months, add_prin_pay
     return balance
 
 
+def additional_principal_payments():
+    add_prin_payments_amount = int(input('How much would you like to pay add to prin? \n'))
+
+    return add_prin_payments_amount
 
 
+def mortgage_payments():
+    """[Calculate the montly mortgage payment based on user inputed information such as home price, interest rate, mortgage term, etc]
+
+    Returns:
+        [montly payment]: [Returns the total montly payment. Monthly payment = Interest + Principal]
+    """
+    
+    print('*** Can I afford this house?? ***')
+
+    home_price = float(input('Enter the Home Price: '))
+
+    downpayment = calculate_downpayment(home_price)
+
+    balance = home_price - downpayment
+
+    print(f'Your balance is {balance}')
+
+    month_interest_rate =  calculate_interests()
+
+    mortgage_lenght_months = calculate_mortgage_term()
+
+    montly_payment = balance * (month_interest_rate * ((1 + month_interest_rate)) ** mortgage_lenght_months) / ((( 1 + month_interest_rate) ** (mortgage_lenght_months)) - 1)
+
+    print('\n' f'Your Monthly Payment is: {round(montly_payment, 2)}' '\n')
+
+    total_payments = int(input("How many payments would you like to make: " '\n'))
+    add_prin_payments = int(input('Would you like to make additional payments to principa? \n'
+    "1 = Yes, I want to make additional principal payments" '\n'
+    "2 = No, I don't want to make additional principal payments" '\n'))
+
+    if add_prin_payments == 1:
+        add_prin_payments_amount = additional_principal_payments()
+    
+    apply_payments(total_payments, balance, mortgage_lenght_months, add_prin_payments_amount, month_interest_rate, montly_payment)
+
+    return home_price
 
 
-
-
-apply_payments(total_payments, balance, mortgage_lenght_months, add_prin_payments_amount)
+mortgage_payments()
