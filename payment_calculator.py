@@ -83,27 +83,23 @@ def mortgage_payments():
 
     Returns:
         [montly payment]: [Returns the total montly payment. Monthly payment = Interest + Principal]
-    """
-    
+    """ 
     print('*** Can I afford this house?? ***')
-
+    
     home_price = float(input('Enter the Home Price: '))
-
     downpayment = calculate_downpayment(home_price)
-
     balance = home_price - downpayment
-
+    
     print(f'Your balance is {balance}')
-
+    
     month_interest_rate =  calculate_interests()
-
     mortgage_lenght_months = calculate_mortgage_term()
-
     montly_payment = balance * (month_interest_rate * ((1 + month_interest_rate)) ** mortgage_lenght_months) / ((( 1 + month_interest_rate) ** (mortgage_lenght_months)) - 1)
 
     print('\n' f'Your Monthly Payment is: {round(montly_payment, 2)}' '\n')
 
     total_payments = int(input("How many payments would you like to make: " '\n'))
+    
     add_prin_payments = int(input('Would you like to make additional payments to principa? \n'
     "1 = Yes, I want to make additional principal payments" '\n'
     "2 = No, I don't want to make additional principal payments" '\n'))
