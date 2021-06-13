@@ -111,5 +111,5 @@ def mortgage_payments():
 
     return home_price
 
-
-mortgage_payments()
+if __name__ == "__main__":
+    mortgage_payments()
